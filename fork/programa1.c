@@ -1,0 +1,38 @@
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+#define MAX_COUNT 200
+
+void ChildProcess(void);
+void ParentProcess(void);
+
+void main(void) {
+    pid_t pid;
+    pid = fork();
+    
+    if (pid == 0)
+        ChildProcess();
+    else
+        ParentProcess();
+    
+    exit(0);
+}
+
+void ChildProcess(void) {
+    int i;
+    for (i = 1; i <= MAX_COUNT; i++)
+        printf(" Processo FILHO, valor = %d\n", i);
+    printf(" *** Processo FILHO finalizado ***\n");
+}
+
+void ParentProcess(void) {
+    wait(NULL);
+    int i;
+    for (i = 1; i <= MAX_COUNT; i++)
+        printf("Processo PAI, value = %d\n", i);
+    printf("*** Processo PAI finalizado ***\n");
+    exit(0);
+}

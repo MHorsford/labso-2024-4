@@ -1,0 +1,25 @@
+a)
+Quando um processo excede a fatia de tempo (quantum) alocada pela CPU, ele é movido do estado 
+Executando para o estado Pronto. Isso permite que outros processos na fila de prontos possam 
+utilizar a CPU, seguindo o escalonamento por time slicing.
+
+b)
+No programa anterior, tanto o processo pai quanto o filho executam loops de impressão 
+concorrentemente. Devido ao time slicing, a CPU alterna entre os dois processos, resultando 
+em saídas intercaladas das iterações de cada processo. A ordem exata depende do escalonador 
+do sistema operacional, mas ambos os processos compartilham a CPU de forma não determinística.
+
+c)
+Para evitar a execução concorrente e tornar o comportamento sequencial, pode-se utilizar a 
+chamada wait() no processo pai. Isso força o pai a aguardar a finalização do filho antes 
+de iniciar sua própria execução. No código fornecido (Programa 02), o wait(NULL) já está 
+presente na função ParentProcess(), garantindo que o pai só execute seu loop após o filho 
+terminar. Assim, as saídas serão sequenciais: primeiro todas as iterações do filho, depois todas do pai.
+
+d)
+O número de iterações necessário para que um processo ocupe mais de uma fatia de tempo 
+depende do quantum definido pelo sistema. Por exemplo, se o quantum for de 100 iterações, 
+definir MAX_COUNT para um valor maior que 100 (e.g., 201) fará com que cada processo precise 
+de pelo menos duas fatias de tempo. Em sistemas modernos, o quantum é tipicamente da ordem 
+de milissegundos, então valores muito altos (e.g., 10.000 iterações) garantiriam múltiplas 
+interrupções, evidenciando a alternância entre os processos.

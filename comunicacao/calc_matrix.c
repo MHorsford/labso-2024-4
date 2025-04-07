@@ -149,6 +149,8 @@ int main() {
         B.data[2] = 2; B.data[3] = 2;
 
         Matrix B_inv = inverse(B);
+        printf("\nMatriz B_inv:\n");
+        print_matrix(B_inv);
         if (B_inv.rows < 0) {
             fprintf(stderr, "Filho: Erro na inversão de B!\n");
             exit(1);
@@ -169,6 +171,8 @@ int main() {
         A.data[2] = 2; A.data[3] = 6;
 
         Matrix A_inv = inverse(A);
+        printf("\nMatriz A_inv:\n");
+        print_matrix(A_inv);
         if (A_inv.rows < 0) {
             fprintf(stderr, "Pai: Erro na inversão de A!\n");
             exit(1);

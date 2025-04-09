@@ -4,16 +4,13 @@
 #include <time.h>
 #include <unistd.h>
 
-// Variáveis compartilhadas
 int balance = 10000;
 int totalDeposited = 0;
 int totalWithdrawn = 0;
 
-// Configurações dinâmicas
 int NUM_THREADS = 2;
 int OPERATIONS_PER_THREAD = 10;
 
-// Embaralhamento Fisher-Yates
 void shuffleArray(char *array, int size) {
     for (int i = size - 1; i > 0; i--) {
         int j = rand() % (i + 1);
@@ -23,13 +20,11 @@ void shuffleArray(char *array, int size) {
     }
 }
 
-// Função da thread
 void *bankOperation(void *thread_id) {
     long tid = (long)thread_id;
     char operations[OPERATIONS_PER_THREAD];
     int values[OPERATIONS_PER_THREAD];
 
-    // Preenche operações com metade '+' e metade '-'
     for (int i = 0; i < OPERATIONS_PER_THREAD / 2; i++) {
         operations[i] = '+';
         operations[i + OPERATIONS_PER_THREAD / 2] = '-';
@@ -37,15 +32,13 @@ void *bankOperation(void *thread_id) {
 
     shuffleArray(operations, OPERATIONS_PER_THREAD);
 
-    // Gera valores aleatórios entre 100 e 500
     for (int i = 0; i < OPERATIONS_PER_THREAD; i++) {
         values[i] = (rand() % 401) + 100;
     }
 
     for (int i = 0; i < OPERATIONS_PER_THREAD; i++) {
-        usleep(rand() % 100); // Atraso aleatório
+        usleep(rand() % 100); 
 
-        // Atualiza as variáveis globais sem proteção (sem mutex)
         if (operations[i] == '+') {
             int prevBalance = balance;
             balance += values[i];
